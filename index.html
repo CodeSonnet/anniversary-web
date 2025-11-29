@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>邓博 & 李思芮 的一周年 ❤️</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* --- Zootopia 配色方案 (保持不变) --- */
+        :root {
+            --nick-color: #e67e22;   /* 尼克橙 */
+            --nick-light: #fadbd8;
+            --judy-color: #3498db;   /* 朱迪蓝 */
+            --judy-light: #ebf5fb;
+            --bg-color: #fdfefe;
+            --text-main: #2c3e50;
+            --nav-height: 60px;
+            --bottom-nav-height: 60px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding-bottom: 80px;
+        }
+
+        /* --- 导航栏样式 --- */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height);
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 0 50px;
+        }
+        .nav-logo { font-size: 1.4rem; font-weight: bold; color: var(--text-main); }
+        .nav-logo span { color: var(--nick-color); }
+        .nav-logo em { color: var(--judy-color); font-style: normal; }
+        
+        .nav-menu { display: flex; list-style: none; gap: 30px; }
+        .nav-item { cursor: pointer; font-weight: 500; transition: color 0.3s; color: #555; }
+        .nav-item:hover, .nav-item.active { color: var(--judy-color); }
+        .nav-item i { margin-right: 5px; }
+
+        /* 手机底部导航 */
+        @media (max-width: 768px) {
+            .navbar { display: none; }
+            .bottom-nav {
+                position: fixed; bottom: 0; left: 0; width: 100%; height: var(--bottom-nav-height);
+                background: white; display: flex; justify-content: space-around; align-items: center;
+                box-shadow: 0 -2px 10px rgba(0,0,0,0.05); z-index: 1000;
+                border-top-left-radius: 20px; border-top-right-radius: 20px;
+            }
+            .b-nav-item {
+                display: flex; flex-direction: column; align-items: center; justify-content: center;
+                font-size: 0.75rem; color: #999; width: 20%;
+            }
+            .b-nav-item i { font-size: 1.2rem; margin-bottom: 4px; transition: transform 0.2s; }
+            .b-nav-item.active { color: var(--nick-color); }
+            .b-nav-item.active i { transform: translateY(-3px); color: var(--nick-color); }
+        }
+        @media (min-width: 769px) { .bottom-nav { display: none; } }
+
+        /* --- Hero Section --- */
+        #home {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--nick-light) 0%, white 50%, var(--judy-light) 100%);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding-top: 50px;
+        }
+        
+        .cp-avatar-box { display: flex; align-items: center; justify-content: center; margin-bottom: 30px; position: relative; }
+        .avatar {
+            width: 120px; height: 120px; border-radius: 50%; border: 4px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); object-fit: cover; z-index: 2;
+        }
+        .avatar.nick { border-color: var(--nick-color); transform: translateX(10px); }
+        .avatar.judy { border-color: var(--judy-color); transform: translateX(-10px); }
+        .heart-beat { font-size: 2rem; color: #e74c3c; animation: beat 1s infinite; z-index: 3; margin: 0 -15px; text-shadow: 0 0 10px white; }
+        @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
+
+        h1 { font-size: 2.2rem; margin-bottom: 10px; color: var(--text-main); }
+        .badges { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
+        .badge { padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; color: white; font-weight: bold; }
+        .badge.nick { background: var(--nick-color); }
+        .badge.judy { background: var(--judy-color); }
+
+        /* 计时器 */
+        .timer { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 20px; }
+        .t-box { background: white; padding: 10px 15px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .t-num { font-size: 1.5rem; font-weight: bold; color: var(--nick-color); }
+        .t-txt { font-size: 0.8rem; color: #888; }
+
+        /* --- 通用 Section --- */
+        section { padding: 60px 20px; max-width: 1000px; margin: 0 auto; }
+        .title-box { text-align: center; margin-bottom: 40px; }
+        .main-title { font-size: 1.8rem; color: var(--text-main); position: relative; display: inline-block; }
+        .main-title::after { content: ''; display: block; width: 100%; height: 4px; background: linear-gradient(to right, var(--nick-color), var(--judy-color)); margin-top: 5px; border-radius: 2px; }
+
+        /* 故事卡片 */
+        .profile-card {
+            background: white; border-radius: 20px; padding: 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px; position: relative;
+        }
+        .card-icon { font-size: 2.5rem; flex-shrink: 0; }
+        
+        .zootopia-quote { text-align: center; font-style: italic; color: #7f8c8d; margin-top: 20px; font-size: 1.1rem; }
+
+        /* --- 相册 --- */
+        .gallery-container { column-count: 3; column-gap: 15px; }
+        @media (max-width: 768px) { .gallery-container { column-count: 2; } }
+        .photo-item { break-inside: avoid; margin-bottom: 15px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer; }
+        .photo-item img { width: 100%; display: block; transition: transform 0.5s; }
+        .photo-item:hover img { transform: scale(1.05); }
+        .load-btn-box { text-align: center; margin-top: 30px; }
+        .load-btn { background: linear-gradient(45deg, var(--nick-color), var(--judy-color)); color: white; border: none; padding: 12px 40px; border-radius: 50px; font-size: 1.1rem; cursor: pointer; box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4); }
+
+        /* --- 愿望清单 (新增) --- */
+        .wish-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
+        .wish-item { background: white; padding: 15px; border-radius: 10px; display: flex; align-items: center; box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
+        .wish-icon { color: var(--judy-color); margin-right: 10px; font-size: 1.2rem; }
+        .wish-item.done .wish-icon { color: var(--nick-color); }
+        .wish-item.done span { text-decoration: line-through; color: #aaa; }
+
+        /* --- 音乐 & 装饰 --- */
+        .music-control { position: fixed; top: 80px; right: 20px; width: 40px; height: 40px; background: white; border-radius: 50%; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; justify-content: center; align-items: center; z-index: 999; color: var(--nick-color); border: 2px solid var(--nick-color); cursor: pointer; }
+        .music-control.playing { animation: spin 4s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .decor { position: fixed; z-index: -1; opacity: 0.1; font-size: 5rem; }
+        .d1 { top: 10%; left: -20px; transform: rotate(20deg); }
+        .d2 { bottom: 20%; right: -20px; transform: rotate(-15deg); }
+        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: center; }
+        .lightbox img { max-width: 95%; max-height: 80%; border-radius: 5px; }
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo"><span>邓博</span> & <em>李思芮</em></div>
+        <ul class="nav-menu">
+             <li class="nav-item active" onclick="scrollToId('home')"><i class="fas fa-home"></i> 首页</li>
+            <li class="nav-item" onclick="scrollToId('story')"><i class="fas fa-book"></i> 我们的故事</li>
+            <li class="nav-item" onclick="scrollToId('gallery')"><i class="fas fa-images"></i> 甜蜜相册</li>
+            <li class="nav-item" onclick="scrollToId('wishes')"><i class="fas fa-heart"></i> 愿望</li>
+            <li class="nav-item" onclick="scrollToId('letter')"><i class="fas fa-envelope"></i> 致my Love</li>
+            
+    </nav>
+
+    <div class="bottom-nav">
+        <div class="b-nav-item active" onclick="scrollToId('home')"><i class="fas fa-heart"></i><span>首页</span></div>
+        <div class="b-nav-item" onclick="scrollToId('story')"><i class="fas fa-book"></i><span>故事</span></div>
+        <div class="b-nav-item" onclick="scrollToId('gallery')"><i class="fas fa-camera"></i><span>相册</span></div>
+        <div class="b-nav-item" onclick="scrollToId('wishes')"><i class="fas fa-list-ul"></i><span>愿望</span></div>
+    </div>
+
+    <div class="music-control" id="musicBtn"><i class="fas fa-music"></i></div>
+    <audio id="bgm" src="love.mp3" autoplay loop></audio>
+
+    <div class="decor d1">🦊</div>
+    <div class="decor d2">🐰</div>
+
+    <section id="home">
+        <div class="cp-avatar-box">
+            <img src="nick.jpg" alt="Nick" class="avatar nick">
+            <div class="heart-beat">❤️</div>
+            <img src="judy.jpg" alt="Judy" class="avatar judy">
+        </div>
+        
+        <h1>Happy 1st Anniversary</h1>
+        <div class="badges">
+            <div class="badge nick">🦊 邓博 (Nick)</div>
+            <div class="badge judy">🐰 李思芮 (Judy)</div>
+        </div>
+        <p style="margin-top:10px; color:#666;">Try Everything, Love Only You.</p>
+
+        <div class="timer">
+            <div class="t-box"><div class="t-num" id="d">0</div><div class="t-txt">Days</div></div>
+            <div class="t-box"><div class="t-num" id="h">0</div><div class="t-txt">Hours</div></div>
+            <div class="t-box"><div class="t-num" id="m">0</div><div class="t-txt">Min</div></div>
+            <div class="t-box"><div class="t-num" id="s">0</div><div class="t-txt">Sec</div></div>
+        </div>
+    </section>
+
+    <section id="story">
+        <div class="title-box">
+            <h2 class="main-title">Love Timeline</h2>
+            <p>我们的探案（恋爱）记录</p>
+        </div>
+        
+        <div class="profile-card">
+            <div class="card-icon">📅</div>
+            <div>
+                <h3 style="color:var(--nick-color)">2024.11.21 · 案件开启</h3>
+                <p style="color:#666; font-size:0.95rem; margin-top:5px;">
+                    在这一天，我们正式建立“搭档”关系。你说我像尼克一样狡猾，但我只想把所有的真心都给你。
+                </p>
+            </div>
+        </div>
+
+        <div class="profile-card">
+            <div class="card-icon">✈️</div>
+            <div>
+                <h3 style="color:var(--judy-color)">2025.05.01 · 第一次旅行</h3>
+                <p style="color:#666; font-size:0.95rem; margin-top:5px;">
+                    一起去了海边。记得那天风很大，你戴着我的帽子，笑得比阳光还灿烂。
+                </p>
+            </div>
+        </div>
+
+        <div class="profile-card">
+            <div class="card-icon">🎂</div>
+            <div>
+                <h3 style="color:var(--nick-color)">2025.xx.xx · 你的生日</h3>
+                <p style="color:#666; font-size:0.95rem; margin-top:5px;">
+                    虽然准备惊喜的时候差点露馅，但看到你许愿的样子，我觉得一切都值了。
+                </p>
+            </div>
+        </div>
+
+        <div class="zootopia-quote">
+            "It’s called a hustle, sweetheart." <br>
+            但在爱你这件事上，我从不耍滑头。
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div class="title-box">
+            <h2 class="main-title">Sweet Memory</h2>
+            <p>收集了 100+ 个心动瞬间</p>
+        </div>
+
+        <div class="gallery-container" id="photo-wall">
+            </div>
+
+        <div class="load-btn-box">
+            <button class="load-btn" id="loadMore">加载更多回忆 📸</button>
+        </div>
+    </section>
+
+    <section id="wishes">
+        <div class="title-box">
+            <h2 class="main-title">To-Do List</h2>
+            <p>未来要和你一起完成的小事</p>
+        </div>
+        <div class="wish-list">
+            <div class="wish-item done">
+                <div class="wish-icon"><i class="fas fa-check-circle"></i></div>
+                <span>一起庆祝一周年纪念日</span>
+            </div>
+            <div class="wish-item">
+                <div class="wish-icon"><i class="far fa-circle"></i></div>
+                <span>去迪士尼看一次烟花</span>
+            </div>
+            <div class="wish-item">
+                <div class="wish-icon"><i class="far fa-circle"></i></div>
+                <span>一起养一只小狗</span>
+            </div>
+            <div class="wish-item">
+                <div class="wish-icon"><i class="far fa-circle"></i></div>
+                <span>每年都要拍一套合照</span>
+            </div>
+            <div class="wish-item">
+                <div class="wish-icon"><i class="far fa-circle"></i></div>
+                <span>一起去一次西藏/新疆</span>
+            </div>
+            <div class="wish-item">
+                <div class="wish-icon"><i class="far fa-circle"></i></div>
+                <span>学会做你最爱吃的菜</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="letter" style="margin-bottom: 50px;">
+        <div class="title-box">
+            <h2 class="main-title">To My Judy</h2>
+        </div>
+        <div style="background: #fff; padding: 30px; border-radius: 15px; border-left: 5px solid var(--nick-color); line-height: 1.8; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+            <p>亲爱的思芮：</p>
+            <p><br>一周年快乐！<br>
+            大家都说狐狸狡猾，兔子天真，但我们打破了所有偏见走到了一起。<br>
+            这一年里，谢谢你包容我的小缺点，也谢谢你带给我的阳光。<br>
+            就像电影里说的："Life's a little bit messy. We all make mistakes." <br>
+            生活可能会乱糟糟的，但只要和你在一起，我就有Try Everything的勇气。<br><br>
+            永远做你最忠实的搭档。
+            </p>
+            <p style="text-align: right; margin-top: 20px; font-weight: bold; color: var(--nick-color);">—— 你的邓博 🦊</p>
+        </div>
+    </section>
+
+    <div class="lightbox" id="lightbox" onclick="this.style.display='none'">
+        <img id="lb-img" src="">
+    </div>
+
+    <script>
+        // --- 1. 自动相册脚本 ---
+        const config = {
+            totalPhotos: 101,   // 【注意】这里改成你实际的照片数量
+            photosPerPage: 12,  
+            current: 1          
+        };
+
+        const galleryEl = document.getElementById('photo-wall');
+        const loadBtn = document.getElementById('loadMore');
+
+        function loadPhotos() {
+            const end = Math.min(config.current + config.photosPerPage - 1, config.totalPhotos);
+            for (let i = config.current; i <= end; i++) {
+                const div = document.createElement('div');
+                div.className = 'photo-item';
+                div.innerHTML = `<img src="images/${i}.jpg" alt="Photo ${i}" loading="lazy" onclick="viewPhoto(this.src)">`;
+                galleryEl.appendChild(div);
+            }
+            config.current = end + 1;
+            if (config.current > config.totalPhotos) loadBtn.style.display = 'none';
+        }
+        loadPhotos();
+        loadBtn.addEventListener('click', loadPhotos);
+
+        function viewPhoto(src) {
+            document.getElementById('lb-img').src = src;
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+
+        // --- 2. 导航跳转 ---
+        function scrollToId(id) {
+            const el = document.getElementById(id);
+            const offset = 70; 
+            const bodyRect = document.body.getBoundingClientRect().top;
+            const elementRect = el.getBoundingClientRect().top;
+            const elementPosition = elementRect - bodyRect;
+            const offsetPosition = elementPosition - offset;
+            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+
+            document.querySelectorAll('.b-nav-item').forEach(item => item.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+        }
+
+        // --- 3. 恋爱计时器 ---
+        const startDate = new Date('2024-11-21T00:00:00'); // 【日期设置】
+
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - startDate;
+            document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById('h').innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            document.getElementById('m').innerText = Math.floor((diff / (1000 * 60)) % 60);
+            document.getElementById('s').innerText = Math.floor((diff / 1000) % 60);
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // --- 4. 音乐播放 ---
+        const audio = document.getElementById('bgm');
+        const btn = document.getElementById('musicBtn');
+        let playing = false;
+        
+        document.body.addEventListener('click', () => {
+            if(!playing) { audio.play(); btn.classList.add('playing'); playing = true; }
+        }, {once:true});
+
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if(playing) { audio.pause(); btn.classList.remove('playing'); }
+            else { audio.play(); btn.classList.add('playing'); }
+            playing = !playing;
+        });
+    </script>
+</body>
+</html>
